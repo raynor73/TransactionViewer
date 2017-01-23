@@ -40,7 +40,7 @@ public class CurrencyCalculatorTest {
 
 	@Test
 	public void testIndirectBackwardConversion() throws Exception {
-		assertEquals(1, mCurrencyCalculator.calculate("GBP", "EUR", 2), DELTA);
+		assertEquals(2, mCurrencyCalculator.calculate("GBP", "EUR", 1), DELTA);
 	}
 
 	@Test

@@ -11,11 +11,23 @@ public class CurrencyCalculator {
 
 	public void addConversion(final String from, final String to, final float rate) {
 		TreeNode<String, Float> fromNode = findNode(mCurrenciesGraph, from);
+		TreeNode<String, Float> toNode = findNode(mCurrenciesGraph, to);
+
 		if (fromNode == null) {
 			fromNode = new TreeNode<>(from);
-			mCurrenciesGraph.addChild(fromNode, ROOT_NODE_CONVERSION_RATE);
+			if (toNode == null) {
+				toNode = new TreeNode<>(to);
+				fromNode.addChild(toNode, rate);
+				mCurrenciesGraph.addChild(fromNode, ROOT_NODE_CONVERSION_RATE);
+			} else {
+				toNode.addChild(fromNode, 1 / rate);
+			}
+		} else {
+			if (toNode == null) {
+				toNode = new TreeNode<>(to);
+				fromNode.addChild(toNode, rate);
+			}
 		}
-		fromNode.addChild(new TreeNode<>(to), rate);
 	}
 
 	public float calculate(final String from, final String to, final float amount) throws NoConversionException {
