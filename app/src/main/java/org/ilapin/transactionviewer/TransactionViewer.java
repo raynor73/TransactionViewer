@@ -2,28 +2,17 @@ package org.ilapin.transactionviewer;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.google.common.base.Preconditions;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
-
-import org.ilapin.common.Observable;
-import org.ilapin.common.Observer;
-import org.ilapin.common.SimpleObservable;
+import com.google.common.util.concurrent.*;
+import java8.util.stream.StreamSupport;
+import org.ilapin.common.*;
 import org.ilapin.transactionviewer.backend.Backend;
-import org.ilapin.transactionviewer.currency.CurrencyCalculator;
-import org.ilapin.transactionviewer.currency.NoConversionException;
-import org.ilapin.transactionviewer.product.ProductContainer;
-import org.ilapin.transactionviewer.product.Transaction;
-import org.ilapin.transactionviewer.product.TransactionParser;
+import org.ilapin.transactionviewer.currency.*;
+import org.ilapin.transactionviewer.product.*;
 
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import java8.util.stream.StreamSupport;
 
 public class TransactionViewer implements Observable {
 
@@ -66,7 +55,11 @@ public class TransactionViewer implements Observable {
 	}
 
 	public float getTotal(final String sku) throws NoConversionException {
-		return 100;
+		float total = 0;
+		for (final Transaction transaction : mProductContainer.getTransactions(sku)) {
+			total += mCurrencyCalculator.calculate(transaction.getCurrency(), "GBP", transaction.getAmount());
+		}
+		return total;
 	}
 
 	@Override
@@ -104,13 +97,48 @@ public class TransactionViewer implements Observable {
 		mObservable.notifyObservers();
 	}
 
+	private void parseRates(final String s) {
+		final FutureCallback<Set<Rate>> callback = new FutureCallback<Set<Rate>>() {
+
+			@Override
+			public void onSuccess(final Set<Rate> rates) {
+				StreamSupport.stream(rates).forEach((r) -> mCurrencyCalculator.addConversion(r.getFrom(), r.getTo(), r.getRate()));
+				changeState(State.READY);
+			}
+
+			@Override
+			public void onFailure(@NonNull final Throwable throwable) {
+				Log.e(TAG, "Failed to parse rates");
+				changeState(State.READY);
+			}
+		};
+
+		Futures.addCallback(
+				mExecutorService.submit(() -> RateParser.parseRates(s)),
+				callback,
+				mCallbackExecutor
+		);
+	}
+
 	private void parseTransactions(final String s) {
 		final FutureCallback<Set<Transaction>> callback = new FutureCallback<Set<Transaction>>() {
 
 			@Override
 			public void onSuccess(final Set<Transaction> transactions) {
 				StreamSupport.stream(transactions).forEach(mProductContainer::addTransaction);
-				changeState(State.READY);
+
+				mBackend.loadRates(new FutureCallback<String>() {
+
+					@Override
+					public void onSuccess(final String s) {
+						parseRates(s);
+					}
+
+					@Override
+					public void onFailure(@NonNull final Throwable throwable) {
+						Log.e(TAG, "Failed to load rates", throwable);
+					}
+				});
 			}
 
 			@Override
