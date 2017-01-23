@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 
-		mTransactionViewer.addObserver(mTransactionViewerObserver, mMainThreadExecutor);
+		mTransactionViewer.addObserverAndNotify(mTransactionViewerObserver, mMainThreadExecutor);
 	}
 
 	@Override
@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 			public ViewHolder(final View itemView) {
 				super(itemView);
 				ButterKnife.bind(this, itemView);
+				itemView.setOnClickListener(v -> TransactionsActivity.start(MainActivity.this, mProducts.get(getAdapterPosition()).getSku()));
 			}
 		}
 	}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/activity_transactions"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="org.ilapin.transactionviewer.ui.TransactionsActivity">
+
+	<TextView
+		android:id="@+id/view_total"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/TextAppearance.AppCompat.Large"
+		android:text="Total: 0"
+		tools:ignore="HardcodedText" />
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/view_list"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/view_total" />
+
+	<ProgressBar
+		android:id="@+id/view_progress_bar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		style="?android:attr/progressBarStyleLarge" />
+
+</RelativeLayout>

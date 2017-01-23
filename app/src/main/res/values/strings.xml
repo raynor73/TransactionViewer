@@ -1,4 +1,7 @@
 <resources>
 	<string name="app_name">Transaction Viewer</string>
 	<string name="products">Products</string>
+	<string name="total">Total: %1$s</string>
+	<string name="not_available">N/A</string>
+	<string name="transactions_for">Transactions for %1$s</string>
 </resources>

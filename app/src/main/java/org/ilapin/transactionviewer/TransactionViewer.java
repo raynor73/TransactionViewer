@@ -14,6 +14,7 @@ import org.ilapin.common.Observer;
 import org.ilapin.common.SimpleObservable;
 import org.ilapin.transactionviewer.backend.Backend;
 import org.ilapin.transactionviewer.currency.CurrencyCalculator;
+import org.ilapin.transactionviewer.currency.NoConversionException;
 import org.ilapin.transactionviewer.product.ProductContainer;
 import org.ilapin.transactionviewer.product.Transaction;
 import org.ilapin.transactionviewer.product.TransactionParser;
@@ -62,6 +63,10 @@ public class TransactionViewer implements Observable {
 
 	public State getState() {
 		return mState;
+	}
+
+	public float getTotal(final String sku) throws NoConversionException {
+		return 100;
 	}
 
 	@Override
