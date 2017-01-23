@@ -4,29 +4,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import org.ilapin.common.Observer;
 import org.ilapin.common.android.MainThreadExecutor;
-import org.ilapin.transactionviewer.App;
-import org.ilapin.transactionviewer.R;
-import org.ilapin.transactionviewer.TransactionViewer;
+import org.ilapin.transactionviewer.*;
 import org.ilapin.transactionviewer.product.Product;
 import org.ilapin.transactionviewer.product.ProductContainer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 		App.getApplicationComponent().inject(this);
 
 		mProductListAdapter = new ProductListAdapter();
-
 		mProductListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		mProductListRecyclerView.setAdapter(mProductListAdapter);
 	}

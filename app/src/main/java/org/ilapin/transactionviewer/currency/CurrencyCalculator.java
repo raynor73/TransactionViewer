@@ -102,9 +102,4 @@ public class CurrencyCalculator {
 
 		return parents;
 	}
-
-	/*private boolean isTreeContains(final TreeNode<String, Float> node, final String data) {
-		final Stream<TreeNode<String, Float>> stream = StreamSupport.stream(node.getChildren());
-		return node.getData().equals(data) || stream.filter((n) -> isTreeContains(n, data)).count() > 0;
-	}*/
 }
