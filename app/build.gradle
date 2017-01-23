@@ -6,7 +6,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "org.ilapin.transactionviewer"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -41,5 +41,5 @@ dependencies {
     compile 'net.sourceforge.streamsupport:streamsupport-atomic:1.5'
     compile 'net.sourceforge.streamsupport:streamsupport-flow:1.5'
     compile 'net.sourceforge.streamsupport:streamsupport-literal:1.5'
-    compile 'com.google.guava:guava:21.0'
+    compile 'com.google.guava:guava:19.0'
 }

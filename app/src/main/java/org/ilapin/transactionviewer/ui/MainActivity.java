@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 		public void onBindViewHolder(final ViewHolder holder, final int position) {
 			final Product product = mProducts.get(position);
 			holder.titleTextView.setText(product.getSku());
-			holder.subTitleTextView.setText(product.getNumberOfTransactions());
+			holder.subTitleTextView.setText(String.valueOf(product.getNumberOfTransactions()));
 		}
 
 		@Override
