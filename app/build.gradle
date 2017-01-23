@@ -41,5 +41,4 @@ dependencies {
     compile 'net.sourceforge.streamsupport:streamsupport-atomic:1.5'
     compile 'net.sourceforge.streamsupport:streamsupport-flow:1.5'
     compile 'net.sourceforge.streamsupport:streamsupport-literal:1.5'
-    compile 'com.google.guava:guava:19.0'
 }
