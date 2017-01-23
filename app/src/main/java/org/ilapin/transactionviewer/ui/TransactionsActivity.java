@@ -122,6 +122,7 @@ public class TransactionsActivity extends AppCompatActivity {
 		private final List<Transaction> mTransactions = new ArrayList<>();
 
 		public void setData(final Set<Transaction> transactions) {
+			mTransactions.clear();
 			mTransactions.addAll(transactions);
 			notifyDataSetChanged();
 		}

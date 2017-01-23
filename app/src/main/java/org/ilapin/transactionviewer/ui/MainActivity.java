@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 		private final List<Product> mProducts = new ArrayList<>();
 
 		public void setData(final Set<Product> products) {
+			mProducts.clear();
 			mProducts.addAll(products);
 			Collections.sort(mProducts, (a, b) -> a.getSku().compareTo(b.getSku()));
 			notifyDataSetChanged();
